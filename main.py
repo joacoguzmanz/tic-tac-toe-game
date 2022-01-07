@@ -1,6 +1,10 @@
 from functions import *
 
-testBoard = ['#', 1, 2, 3, 4, 5, 6, 7, 8, 9]
+testBoard = ['#', 1, 2, 3, 4, 5, ' ', 7, 8, 9]
 
-placeMarker(testBoard, 'J', 5)
-displayBoard(testBoard)
+# placeMarker(testBoard, 'J', 5)
+# displayBoard(testBoard)
+
+# print(playerPositionChoice(testBoard))
+
+print(playAgain())

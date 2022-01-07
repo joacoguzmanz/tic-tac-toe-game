@@ -1,4 +1,5 @@
 from random import randint
+from typing import NewType
 
 
 def clearOutput():
@@ -74,3 +75,43 @@ def chooseFirstPlayer():
         return 'Player 1 first'
     elif firstPlayer == 2:
         return 'Player 2 first'
+
+
+def checkSpace(board, position):
+    if board[position] == ' ':
+        return True
+    else:
+        return False
+
+
+def checkFullBoard(board):
+    if ' ' not in board:
+        return True
+    else:
+        return False
+
+
+# Add check to see if input is a number
+def playerPositionChoice(board):
+    nextPosition = int(input('What is your next position? (1 to 9) '))
+
+    while not (nextPosition >= 1 and nextPosition <= 9):
+        nextPosition = int(input('Enter a number between 1 and 9: '))
+
+    if checkSpace(board, nextPosition):
+        return nextPosition
+    else:
+        return -1
+
+
+def playAgain():
+    play = input('Do you want to play again? (Y or N): ')
+
+    while not (play.lower() == 'y' or play.lower() == 'n'):
+        play = input('Do you want to play again? (Y or N): ')
+
+    if play.lower() == 'y':
+        return True
+
+    if play.lower() == 'n':
+        return False
