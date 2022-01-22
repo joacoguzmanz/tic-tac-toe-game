@@ -1,6 +1,4 @@
 from random import randint
-from typing import NewType
-
 
 def clearOutput():
     print('\n'*100)
@@ -8,7 +6,7 @@ def clearOutput():
 
 def displayBoard(board):
     print('     |     |     ')
-    print(f'  {board[1]}  |  {board[2]}  |  {board[3]}  ')
+    print(f'  {board[7]}  |  {board[8]}  |  {board[9]}  ')
     print('     |     |     ')
     print('-----------------')
     print('     |     |     ')
@@ -16,7 +14,7 @@ def displayBoard(board):
     print('     |     |     ')
     print('-----------------')
     print('     |     |     ')
-    print(f'  {board[7]}  |  {board[8]}  |  {board[9]}  ')
+    print(f'  {board[1]}  |  {board[2]}  |  {board[3]}  ')
     print('     |     |     ')
 
 
@@ -30,7 +28,7 @@ def playerInput():
 
     while not (marker.lower() == 'x' or marker.lower() == 'o'):
         print('Not X nor O!')
-        marker = input('What marker do you want to use? (X or O)')
+        marker = input('What marker do you want to use? (X or O) ')
 
     playersMarkers.update({'player1': marker.upper()})
 
@@ -40,29 +38,22 @@ def playerInput():
     if playersMarkers['player1'] == 'O':
         playersMarkers.update({'player2': 'X'})
 
-    return playersMarkers.items()
+    return playersMarkers.values()
 
 
 def placeMarker(board, marker, position):
-    board.pop(position)
-    board.insert(position, marker)
+    board[position] = marker
 
 
 def winCheck(board, mark):
-    if ((board[1] == mark and board[2] == mark and board[3] == mark) or  # first row
-            # second row
+    if ((board[1] == mark and board[2] == mark and board[3] == mark) or 
             (board[4] == mark and board[5] == mark and board[6] == mark) or
-            # third row
             (board[7] == mark and board[8] == mark and board[9] == mark) or
-            # first col
             (board[1] == mark and board[4] == mark and board[7] == mark) or
-            # second col
             (board[2] == mark and board[5] == mark and board[8] == mark) or
-            # third col
             (board[3] == mark and board[6] == mark and board[9] == mark) or
-            # first diagonal
             (board[1] == mark and board[5] == mark and board[9] == mark) or
-            (board[3] == mark and board[5] == mark and board[7] == mark)):  # second diagonal
+            (board[3] == mark and board[5] == mark and board[7] == mark)): 
         return True
     else:
         return False
@@ -72,9 +63,9 @@ def chooseFirstPlayer():
     firstPlayer = randint(1, 2)
 
     if firstPlayer == 1:
-        return 'Player 1 first'
+        return 'Player 1'
     elif firstPlayer == 2:
-        return 'Player 2 first'
+        return 'Player 2'
 
 
 def checkSpace(board, position):
@@ -84,24 +75,21 @@ def checkSpace(board, position):
         return False
 
 
-def checkFullBoard(board):
-    if ' ' not in board:
-        return True
-    else:
-        return False
+def isBoardFull(board):
+    for i in range(1, 10):
+        if checkSpace(board, i):
+            return False
+    return True
 
 
 # Add check to see if input is a number
 def playerPositionChoice(board):
-    nextPosition = int(input('What is your next position? (1 to 9) '))
+    nextPosition = 0
 
-    while not (nextPosition >= 1 and nextPosition <= 9):
-        nextPosition = int(input('Enter a number between 1 and 9: '))
+    while nextPosition not in [1, 2, 3, 4, 5, 6, 7, 8, 9] or not checkSpace(board, nextPosition):
+        nextPosition = int(input('Choose your next position: [1 - 9] '))
 
-    if checkSpace(board, nextPosition):
-        return nextPosition
-    else:
-        return -1
+    return nextPosition
 
 
 def playAgain():
